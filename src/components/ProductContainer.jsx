@@ -17,7 +17,8 @@ class ProductContainer extends React.Component {
     item = Object.assign(
       {},
       item,
-      {name: this.state.products.name}
+      {name: this.state.products.name},
+      {quantity: 1}
     );
 
     Actions.addToCart(item);

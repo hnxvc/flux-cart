@@ -8,21 +8,31 @@ class Card extends React.Component {
   }
 
   render() {
-    console.log('REMOVEME --- state CART.jsx', this.state);
+    let cartStore = this.state.cartStore;
+
+    let total = cartStore.reduce((prev, curr) => {
+      return prev += (curr.price * curr.quantity);
+    }, 0);
     return(
       <div className="Card">
         <div className="flux-cart active">
           <div className="mini-cart">
             <button type="button" className="close-cart">×</button>
             <ul>
-              <li>
-                <h1 className="name">Name</h1>
-                <p className="type">type x 2</p>
-                <p className="price">$20 * 10</p>
-                <button type="button" className="remove-item">Remove</button>
-              </li>
+              {
+                cartStore.map(item => {
+                  return (
+                    <li key={item.sku}>
+                      <h1 className="name">{item.name}</h1>
+                      <p className="type">{item.type}</p>
+                      <p className="price">${item.price} * {item.quantity}</p>
+                      <button type="button" className="remove-item">Remove</button>
+                    </li>
+                  );
+                })
+              }
             </ul>
-            <span className="total">Total: $90</span>
+            <span className="total">Total: ${total.toFixed(2)}</span>
           </div>
           <button type="button" className="view-cart">View Cart</button>
         </div>
