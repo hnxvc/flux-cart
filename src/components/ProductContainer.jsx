@@ -14,10 +14,9 @@ class ProductContainer extends React.Component {
   }
 
   render() {
-    console.log('REMOEME ---- ProductContainer state', this.state);
     return(
       <div className="ProductContainer">
-        <Product />
+        <Product {...this.state}/>
       </div>
     );
   }
