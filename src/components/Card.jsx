@@ -1,4 +1,6 @@
 import React from 'react';
+import { Container } from 'flux/utils';
+import CartStore from '../stores/CartStore';
 
 class Card extends React.Component {
   constructor(props) {
@@ -6,6 +8,7 @@ class Card extends React.Component {
   }
 
   render() {
+    console.log('REMOVEME --- state CART.jsx', this.state);
     return(
       <div className="Card">
         <div className="flux-cart active">
@@ -28,4 +31,11 @@ class Card extends React.Component {
   }
 }
 
-export default Card;
+Card.getStores = () => [CartStore];
+Card.calculateState = (prevState) => {
+  return ({
+    cartStore: CartStore.getState()
+  })
+}
+
+export default Container.create(Card);

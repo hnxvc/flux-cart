@@ -4,22 +4,24 @@ class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      sku: '',
       price: 0
     }
     this.onChange = this.onChange.bind(this);
   }
 
   onChange(e) {
-    let value = e.target.value;
+    let sku = e.target.value;
     let variants = this.props.products.variants;
     let index = variants.findIndex(item => {
-      return item.sku === value;
+      return item.sku === sku;
     })
 
     let price = variants[index].price;
 
     this.setState({
-      price: price
+      sku,
+      price
     });
   }
 
@@ -27,8 +29,10 @@ class Product extends React.Component {
   componentWillReceiveProps(nextProps) {
     let variants = nextProps.products.variants;
     let price = variants[0].price;
+    let sku = variants[0].sku;
     this.setState({
-      price: price
+      price,
+      sku
     });
   }
 
@@ -49,7 +53,9 @@ class Product extends React.Component {
               })
             }
           </select>
-          <button type="button">
+          <button type="button"
+            onClick={() => this.props.handleAddToCard(this.state.sku)}
+          >
             Add To Cart
           </button>
         </div>

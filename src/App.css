@@ -73,6 +73,7 @@ button {
   outline: none;
   background: #2ecc71;
   box-shadow: 0 5px 0 #27ae60;
+  cursor: pointer;
 }
 
 button:hover {

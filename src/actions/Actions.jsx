@@ -22,7 +22,15 @@ let Actions = {
       });
     });
 
+  },
+
+  addToCart(item) {
+    AppDispatcher.dispatch({
+      type: constants.ADD_TO_CART,
+      data: item
+    });
   }
+
 }
 
 export default Actions;
