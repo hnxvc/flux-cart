@@ -14,6 +14,8 @@ class ProductContainer extends React.Component {
     };
     this.handleAddToCard = this.handleAddToCard.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.isProductSoldOut = this.isProductSoldOut.bind(this);
+    this.isProductExistsStore = this.isProductExistsStore.bind(this);
   }
 
   onChange(sku, price) {
@@ -24,6 +26,7 @@ class ProductContainer extends React.Component {
   }
 
   handleAddToCard() {
+
     let item = this.state.products.variants.find(item => {
       return item.sku === this.state.sku;
     });
@@ -35,20 +38,41 @@ class ProductContainer extends React.Component {
       {quantity: 1}
     );
 
-    if(this.checkProductExistsStore(item)) {
-      Actions.updateQuantity(item)
+    if(this.isProductExistsStore(item)) {
+      Actions.updateQuantity(item);
     } else {
       Actions.addToCart(item);
     }
   }
 
-  checkProductExistsStore(item) {
+  isProductExistsStore(item) {
     let sku = item.sku;
     let index = this.state.cartStore.findIndex(item=> {
       return item.sku === sku;
     });
 
     return (index !== -1) ? true : false;
+  }
+
+  isProductSoldOut(sku) {
+    if(this.state.cartStore.length === 0) {
+      return;
+    }
+
+    let item = this.state.cartStore.find(item=> {
+      return item.sku === sku;
+    });
+    if(!item) {
+      return false;
+    }
+
+    let quantity = item.quantity;
+
+    let product = this.state.products.variants.find(item => {
+      return item.sku === sku;
+    });
+    let inventory = product.inventory;
+    return (quantity >= inventory);
   }
 
   componentDidMount() {
@@ -61,6 +85,10 @@ class ProductContainer extends React.Component {
         sku: this.state.products.variants[0].sku,
         price: this.state.products.variants[0].price,
       })
+    } else {
+      this.setState({
+        isSoldOut: this.isProductSoldOut(this.state.sku)
+      });
     }
   }
 

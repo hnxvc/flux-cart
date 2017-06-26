@@ -44,8 +44,14 @@ class Product extends React.Component {
           </select>
           <button type="button"
             onClick={() => this.props.handleAddToCard()}
+            disabled={this.props.isSoldOut}
           >
-            Add To Cart
+            {
+              this.props.isSoldOut ?
+                'Sold out'
+              :
+                'Add To Cart'
+            }
           </button>
         </div>
       </div>
