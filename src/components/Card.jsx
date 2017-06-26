@@ -3,10 +3,6 @@ import { Container } from 'flux/utils';
 import CartStore from '../stores/CartStore';
 
 class Card extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let cartStore = this.state.cartStore;
 

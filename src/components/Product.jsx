@@ -4,7 +4,7 @@ class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sku: '', //FIXME: Set default sku with this.props.products
+      sku: '',
       price: 0
     }
     this.onChange = this.onChange.bind(this);
@@ -19,10 +19,7 @@ class Product extends React.Component {
 
     let price = variants[index].price;
 
-    this.setState({
-      sku,
-      price
-    });
+    this.props.onChange(sku, price);
   }
 
   render() {
@@ -30,14 +27,14 @@ class Product extends React.Component {
     return(
       <div className="Product">
         <div className="flux-product">
-        <img src={products.image} />
+        <img src={products.image} alt={products.name}/>
         <div className="flux-product-detail">
           <h1 className="name">{products.name}</h1>
           <p className="description">{products.description}</p>
-          <p className="price">Price: ${this.state.price}</p>
+          <p className="price">Price: ${this.props.price}</p>
           <select
             onChange={this.onChange}
-            value={this.state.sku}
+            value={this.props.sku}
           >
             {
               products.variants && products.variants.map(item => {
@@ -46,7 +43,7 @@ class Product extends React.Component {
             }
           </select>
           <button type="button"
-            onClick={() => this.props.handleAddToCard(this.state.sku)}
+            onClick={() => this.props.handleAddToCard()}
           >
             Add To Cart
           </button>
