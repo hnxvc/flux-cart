@@ -1,14 +1,9 @@
 import React from 'react';
-import { Container } from 'flux/utils';
-import CartStore from '../stores/CartStore';
 
 class Card extends React.Component {
   render() {
-    let cartStore = this.state.cartStore;
+    let cartStore = this.props.cartStore;
 
-    let total = cartStore.reduce((prev, curr) => {
-      return prev += (curr.price * curr.quantity);
-    }, 0);
     return(
       <div className="Card">
         <div className="flux-cart active">
@@ -22,13 +17,15 @@ class Card extends React.Component {
                       <h1 className="name">{item.name}</h1>
                       <p className="type">{item.type}</p>
                       <p className="price">${item.price} * {item.quantity}</p>
-                      <button type="button" className="remove-item">Remove</button>
+                      <button type="button" className="remove-item"
+                        onClick={()=>this.props.removeProduct(item.sku)}
+                        >Remove</button>
                     </li>
                   );
                 })
               }
             </ul>
-            <span className="total">Total: ${total.toFixed(2)}</span>
+            <span className="total">Total: ${this.props.total.toFixed(2)}</span>
           </div>
           <button type="button" className="view-cart">View Cart</button>
         </div>
@@ -37,11 +34,5 @@ class Card extends React.Component {
   }
 }
 
-Card.getStores = () => [CartStore];
-Card.calculateState = (prevState) => {
-  return ({
-    cartStore: CartStore.getState()
-  })
-}
 
-export default Container.create(Card);
+export default Card;

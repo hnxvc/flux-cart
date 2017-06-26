@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ProductContainer from './components/ProductContainer';
-import Card from './components/Card';
+import CardContainer from './components/CardContainer';
 import './App.css';
 
 class App extends Component {
@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <div className="App">
         <ProductContainer />
-        <Card />
+        <CardContainer />
       </div>
     );
   }

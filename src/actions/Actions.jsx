@@ -36,8 +36,14 @@ let Actions = {
       type: constants.UPDATE_QUANTITY,
       data: item
     })
-  }
+  },
 
+  removeProduct(sku) {
+    AppDispatcher.dispatch({
+      type: constants.REMOVE_PRODUCT,
+      data: {sku}
+    })
+  }
 }
 
 export default Actions;
