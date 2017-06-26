@@ -8,7 +8,6 @@ class Card extends React.Component {
       <div className="Card">
         <div className="flux-cart active">
           <div className="mini-cart">
-            <button type="button" className="close-cart">×</button>
             <ul>
               {
                 cartStore.map((item) => {
