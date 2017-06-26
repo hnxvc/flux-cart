@@ -4,7 +4,7 @@ class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sku: '',
+      sku: '', //FIXME: Set default sku with this.props.products
       price: 0
     }
     this.onChange = this.onChange.bind(this);
@@ -25,17 +25,6 @@ class Product extends React.Component {
     });
   }
 
-
-  componentWillReceiveProps(nextProps) {
-    let variants = nextProps.products.variants;
-    let price = variants[0].price;
-    let sku = variants[0].sku;
-    this.setState({
-      price,
-      sku
-    });
-  }
-
   render() {
     let products = this.props.products;
     return(
@@ -46,7 +35,10 @@ class Product extends React.Component {
           <h1 className="name">{products.name}</h1>
           <p className="description">{products.description}</p>
           <p className="price">Price: ${this.state.price}</p>
-          <select onChange={this.onChange}>
+          <select
+            onChange={this.onChange}
+            value={this.state.sku}
+          >
             {
               products.variants && products.variants.map(item => {
                 return <option key={item.sku} value={item.sku}>{item.type}</option>

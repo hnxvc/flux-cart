@@ -20,7 +20,7 @@ class Card extends React.Component {
             <button type="button" className="close-cart">×</button>
             <ul>
               {
-                cartStore.map(item => {
+                cartStore.map((item) => {
                   return (
                     <li key={item.sku}>
                       <h1 className="name">{item.name}</h1>

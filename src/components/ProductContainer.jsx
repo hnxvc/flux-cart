@@ -1,6 +1,7 @@
 import React from 'react';
 import Product from './Product';
-import ProductsStore from '../stores/ProductsStore'
+import ProductsStore from '../stores/ProductsStore';
+import CartStore from '../stores/CartStore';
 import { Container } from 'flux/utils';
 import Actions from '../actions/Actions';
 
@@ -13,7 +14,8 @@ class ProductContainer extends React.Component {
   handleAddToCard(sku) {
     let item = this.state.products.variants.find(item => {
       return item.sku === sku;
-    })
+    });
+
     item = Object.assign(
       {},
       item,
@@ -21,7 +23,20 @@ class ProductContainer extends React.Component {
       {quantity: 1}
     );
 
-    Actions.addToCart(item);
+    if(this.checkProductExistsStore(item)) {
+      Actions.updateQuantity(item)
+    } else {
+      Actions.addToCart(item);
+    }
+  }
+
+  checkProductExistsStore(item) {
+    let sku = item.sku;
+    let index = this.state.cartStore.findIndex(item=> {
+      return item.sku === sku;
+    });
+
+    return (index !== -1) ? true : false;
   }
 
   componentDidMount() {
@@ -40,10 +55,11 @@ class ProductContainer extends React.Component {
   }
 }
 
-ProductContainer.getStores = () => ([ProductsStore]);
+ProductContainer.getStores = () => ([ProductsStore, CartStore]);
 ProductContainer.calculateState = (prevState) => {
   return ({
     products: ProductsStore.getState(),
+    cartStore: CartStore.getState()
   })
 }
 

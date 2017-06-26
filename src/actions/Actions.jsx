@@ -29,6 +29,13 @@ let Actions = {
       type: constants.ADD_TO_CART,
       data: item
     });
+  },
+
+  updateQuantity(item) {
+    AppDispatcher.dispatch({
+      type: constants.UPDATE_QUANTITY,
+      data: item
+    })
   }
 
 }
